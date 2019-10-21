@@ -1,5 +1,9 @@
 
 import React, {Component} from 'react';
+import {
+  Link
+} from 'react-router-dom';
+
 
 class Header extends Component {
 
@@ -7,10 +11,13 @@ class Header extends Component {
 
         return(
 
-            <div class="header">
-            <div class="bounds">
-              <h1 class="header--logo">Courses</h1>
-              <nav><a class="signup" href="sign-up.html">Sign Up</a><a class="signin" href="sign-in.html">Sign In</a></nav>
+          <div className="header">
+            <div className="bounds">
+              <h1 className="header--logo">Courses</h1>
+              <nav>
+                <Link className="signup" to='/signup'>Sign Up</Link>
+                <Link className="signin" to='/signin'>Sign In</Link>
+              </nav>
             </div>
           </div>
           

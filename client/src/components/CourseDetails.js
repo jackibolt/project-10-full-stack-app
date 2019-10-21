@@ -1,9 +1,9 @@
 
 import React, { Component } from 'react';
 import axios from 'axios';
-// import {
-//     Link
-// } from 'react-router-dom';
+import {
+    Link
+} from 'react-router-dom';
 
 class CourseDetails extends Component {
 
@@ -55,13 +55,13 @@ class CourseDetails extends Component {
                 </div>
             </div>
 
-// THIS SECTION NEEDS UPDATED LINKS
+// THIS SECTION NEEDS UPDATED DELETE LINK
         return(
             <div>
                 <div className='bounds'>
                     <div className="grid-100">
-                        <span><a className="button" href="/">Update Course</a><a className="button" href="/">Delete Course</a></span><a
-                    className="button button-secondary" href="/">Return to List</a></div>
+                        <span><Link className="button" to={`/courses/${course.id}/update`}>Update Course</Link><Link className="button" to="/">Delete Course</Link></span><Link
+                    className="button button-secondary" to="/">Return to List</Link></div>
                 </div>
 
                 { courseDeets }

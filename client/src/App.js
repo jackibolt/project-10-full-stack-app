@@ -16,6 +16,7 @@ import Courses from './components/Courses';
 import CourseDetails from './components/CourseDetails';
 import UserSignIn from './components/UserSignIn';
 import UserSignUp from './components/UserSignUp';
+import UserSignOut from './components/UserSignOut';
 import CreateCourse from './components/CreateCourse';
 import UpdateCourse from './components/UpdateCourse';
 
@@ -28,12 +29,13 @@ class App extends Component {
       <BrowserRouter>
         <Header />
         <Route exact path='/' component={Courses} />
+        <Route exact path='/courses' component={Courses} />
         <Route exact path='/courses/:id' component={CourseDetails} /> 
+        <Route exact path='/courses/:id/update' component={UpdateCourse} />
+        <Route exact path='/courses/create' component={CreateCourse} />
         <Route path='/signin' component={UserSignIn} />
         <Route path='/signup' component={UserSignUp} />
-        <Route exact path='/courses/create' component={CreateCourse} />
-        <Route exact path='/courses/:id/update' component={UpdateCourse} />
-
+        <Route path='/signout' component={UserSignOut} />
       </BrowserRouter>
     );
   }

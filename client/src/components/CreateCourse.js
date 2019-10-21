@@ -5,10 +5,9 @@ class CreateCourse extends Component {
 
     render() {
 
-        return(
-
-            <div className="bounds course--detail">
-            <h1>Create Course</h1>
+        let newCourseDeets = 
+            <div>
+                <h1>Create Course</h1>
                 <div>
                     <div>
                         <h2 className="validation--errors--label">Validation errors</h2>
@@ -49,7 +48,13 @@ class CreateCourse extends Component {
                         <div className="grid-100 pad-bottom"><button className="button" type="submit">Create Course</button><button className="button button-secondary" onclick="event.preventDefault(); location.href='/';">Cancel</button></div>
                     </form>
                 </div>
-          </div>
+            </div>
+
+        return(
+
+            <div className="bounds course--detail">
+                {newCourseDeets}
+            </div>
 
         )
     }
