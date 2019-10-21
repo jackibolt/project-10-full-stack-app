@@ -24,8 +24,8 @@ class CourseDetails extends Component {
     };
 
     cancelLink() {
-        event.preventDefault(); 
-        location.href='/'
+        // event.preventDefault(); 
+        // location.href='/'
     }
 
     render() {
