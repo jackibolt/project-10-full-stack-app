@@ -1,9 +1,6 @@
 
 import React, { Component } from 'react';
 import axios from 'axios';
-// import {
-//     Link
-// } from 'react-router-dom';
 
 class CourseDetails extends Component {
 
@@ -23,15 +20,19 @@ class CourseDetails extends Component {
             })
     };
 
-    cancelLink() {
-        // event.preventDefault(); 
-        // location.href='/'
+    cancelLink = (event) => {
+        event.preventDefault(); 
+        this.props.history.push(`/courses/${this.props.match.params.id}`);
+    }
+
+    handleSubmit = (event) => {
+        event.preventDefault();
+        console.log('mmmhm');
     }
 
     render() {
 
         let course = this.state.course;
-        console.log(course);
         let courseDeets = 
             <div>
                 <form>
@@ -62,18 +63,17 @@ class CourseDetails extends Component {
                     </div>
                     </div>
                     <div className="grid-100 pad-bottom">
-                        <button className="button" type="submit">Update Course</button>
-                        <button className="button button-secondary" onClick={this.cancelLink}>Cancel</button>
+                        <button className="button" type="submit" onClick={(e) => this.handleSubmit(e)}>Update Course</button>
+                        <button className="button button-secondary" onClick={(e) => this.cancelLink(e)}>Cancel</button>
                     </div>
                 </form>
             </div>
 
-// THIS SECTION NEEDS UPDATED LINKS
         return(
+
             <div className='bounds course--detail'>
                 { courseDeets }
             </div>
-
 
         );
     }

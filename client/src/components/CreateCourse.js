@@ -3,6 +3,24 @@ import React, { Component } from 'react';
 
 class CreateCourse extends Component {
 
+    state = {
+        title: "",
+        description: "",
+        estimatedTime: "",
+        materialsNeeded: "",
+        errors: [],
+    };
+
+    handleSubmit = (event) => {
+        event.preventDefault();
+        console.log('mmmhm creating course is connected');
+    }
+
+    cancelLink = (event) => {
+        event.preventDefault(); 
+        this.props.history.push('/');
+    }
+
     render() {
 
         let newCourseDeets = 
@@ -36,7 +54,10 @@ class CreateCourse extends Component {
                                 </ul>
                             </div>
                         </div>
-                        <div className="grid-100 pad-bottom"><button className="button" type="submit">Create Course</button><button className="button button-secondary" onclick="event.preventDefault(); location.href='/';">Cancel</button></div>
+                        <div className="grid-100 pad-bottom">
+                            <button className="button" type="submit" onClick={(e) => this.handleSubmit(e)}>Create Course</button>
+                            <button className="button button-secondary" onClick={(e) => this.cancelLink(e)}>Cancel</button>
+                        </div>
                     </form>
                 </div>
             </div>

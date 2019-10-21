@@ -19,6 +19,12 @@ import UserSignUp from './components/UserSignUp';
 import UserSignOut from './components/UserSignOut';
 import CreateCourse from './components/CreateCourse';
 import UpdateCourse from './components/UpdateCourse';
+import Error from './components/Error';
+
+import withContext from './Context';
+
+const UserSignUpWithContext = withContext(UserSignUp);
+const UserSignInWithContext = withContext(UserSignIn);
 
 
 class App extends Component {
@@ -33,9 +39,10 @@ class App extends Component {
         <Route exact path='/courses/:id' component={CourseDetails} /> 
         <Route exact path='/courses/:id/update' component={UpdateCourse} />
         <Route exact path='/courses/create' component={CreateCourse} />
-        <Route path='/signin' component={UserSignIn} />
-        <Route path='/signup' component={UserSignUp} />
+        <Route path='/signin' component={UserSignInWithContext} />
+        <Route path='/signup' component={UserSignUpWithContext} />
         <Route path='/signout' component={UserSignOut} />
+        <Route path='/error' component={Error} />
       </BrowserRouter>
     );
   }
