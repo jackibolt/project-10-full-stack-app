@@ -26,7 +26,7 @@ class CourseDetails extends Component {
     render() {
 
         let course = this.state.course;
-        console.log(course)
+        console.log(course);
         let courseDeets = 
             <div>
                 <div className="grid-66">
@@ -55,6 +55,7 @@ class CourseDetails extends Component {
                 </div>
             </div>
 
+// THIS SECTION NEEDS UPDATED LINKS
         return(
             <div>
                 <div className='bounds'>
