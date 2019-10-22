@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 class UserSignIn extends Component {
 
     state = {
-        email: "",
+        emailAddress: "",
         password: "",
         errors: [],
     }
@@ -20,11 +20,11 @@ class UserSignIn extends Component {
         const { context } = this.props;
         // const { from } = this.props.location.state;
         const {
-            email,
+            emailAddress,
             password,
           } = this.state;
 
-        context.actions.signIn(email, password)
+        context.actions.signIn(emailAddress, password)
             .then((user) => {
                 if (user === null) {
                 this.setState(() => {
