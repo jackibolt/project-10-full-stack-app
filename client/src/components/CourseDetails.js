@@ -26,7 +26,6 @@ class CourseDetails extends Component {
     render() {
 
         let course = this.state.course;
-        console.log(course);
         let courseDeets = 
             <div>
                 <div className="grid-66">

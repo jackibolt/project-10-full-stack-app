@@ -14,6 +14,38 @@ class CreateCourse extends Component {
     handleSubmit = (event) => {
         event.preventDefault();
         console.log('mmmhm creating course is connected');
+        const { context } = this.props;
+        const { emailAddress, password } = context.authenticatedUser;
+
+        const {
+            title,
+            description,
+            estimatedTime,
+            materialsNeeded,
+            userId
+        } = this.state; 
+
+        const course = { 
+            userId, 
+            title, 
+            description, 
+            estimatedTime, 
+            materialsNeeded 
+        };
+
+        context.data.createCourse(course, emailAddress, password)
+            .then( errors => {
+                if (errors.length) {
+                    this.setState({ errors });
+                } else {
+                    console.log(`${title} has been successfully created!`);
+                    this.props.history.push('/');
+                }
+            })
+            .catch( err => { 
+                console.log(err);
+                this.props.history.push('/error');
+            });  
     }
 
     cancelLink = (event) => {
@@ -42,12 +74,28 @@ class CreateCourse extends Component {
                         <div className="grid-66">
                             <div className="course--header">
                                 <h4 className="course--label">Course</h4>
-                                <div><input id="title" name="title" type="text" className="input-title course--title--input" placeholder="Course title..." value={this.state.title} onChange={this.change} /></div>
+                                <div>
+                                    <input 
+                                        id="title" 
+                                        name="title" 
+                                        type="text" 
+                                        className="input-title course--title--input" 
+                                        placeholder="Course title..."
+                                        value={this.state.title} 
+                                        onChange={this.change} />
+                                    </div>
                                 <p>By -------</p>
                             </div>
                             <div className="course--description">
                                 <div>
-                                    <textarea id="description" name="description" className="" placeholder="Course description..." onChange={this.change}></textarea>
+                                    <textarea 
+                                        id="description" 
+                                        name="description" 
+                                        className="" 
+                                        placeholder="Course description..."
+                                        value={this.state.description} 
+                                        onChange={this.change}>
+                                    </textarea>
                                 </div>
                             </div>
                         </div>
@@ -57,13 +105,27 @@ class CreateCourse extends Component {
                                     <li className="course--stats--list--item">
                                         <h4>Estimated Time</h4>
                                         <div>
-                                            <input id="estimatedTime" name="estimatedTime" type="text" className="course--time--input" placeholder="Hours" value={this.state.estimatedTime} onChange={this.change} />
+                                            <input 
+                                                id="estimatedTime" 
+                                                name="estimatedTime" 
+                                                type="text" 
+                                                className="course--time--input" 
+                                                placeholder="Hours"
+                                                value={this.state.estimatedTime} 
+                                                onChange={this.change} />
                                         </div>
                                     </li>
                                     <li className="course--stats--list--item">
                                         <h4>Materials Needed</h4>
                                         <div>
-                                            <textarea id="materialsNeeded" name="materialsNeeded" className="" placeholder="List materials..." value={this.state.materialsNeeded} onChange={this.change}></textarea>
+                                            <textarea 
+                                                id="materialsNeeded" 
+                                                name="materialsNeeded" 
+                                                className="" 
+                                                placeholder="List materials..."
+                                                value={this.state.materialsNeeded} 
+                                                onChange={this.change}>
+                                            </textarea>
                                         </div>
                                     </li>
                                 </ul>
