@@ -15,7 +15,7 @@ class CourseDetails extends Component {
                 this.setState({
                     course: response.data.course
                 })
-                console.log(this.state.course)
+                // console.log(this.state.course)
             })
             .catch( error => {
                 console.log(error)
@@ -29,7 +29,7 @@ class CourseDetails extends Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-        console.log('mmmhm');
+        console.log('submit is working');
     }
 
     change = (event) => {
