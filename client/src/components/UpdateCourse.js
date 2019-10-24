@@ -3,19 +3,33 @@ import React, { Component } from 'react';
 import axios from 'axios';
 
 // THIS NEEDS UPDATES TO TEACHER + EDITING CAPABILITIES + UPDATING THE DATABASE
-class CourseDetails extends Component {
+class UpdateCourse extends Component {
 
     state = {
-        course: []
+        title: '',
+        description: '',
+        estimatedTime: '',
+        materialsNeeded: '',
+        id: '',
+        errors: [],
+        ownerFirstName: '',
+        onerLastName: '',
     };
+
+
 
     componentDidMount() {
         axios.get(`http://localhost:5000/api/courses/${this.props.match.params.id}`)
             .then( response => {
                 this.setState({
-                    course: response.data.course
+                    title: response.data.course.title,
+                    description: response.data.course.description,
+                    estimatedTime: response.data.course.estimatedTime,
+                    materialsNeeded: response.data.course.materialsNeeded,
+                    id: response.data.course.id,
+                    ownerFirstName: response.data.course.User.firstName,
+                    ownerLastName: response.data.course.User.lastName
                 })
-                // console.log(this.state.course)
             })
             .catch( error => {
                 console.log(error)
@@ -29,7 +43,42 @@ class CourseDetails extends Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-        console.log('submit is working');
+
+        const { context } = this.props;
+        const authUser = context.authenticatedUser;
+        const userPassword = context.authenticatedUserPassword;
+        const userId = context.authenticatedUser.userId;
+
+        const {
+            title,
+            description,
+            estimatedTime,
+            materialsNeeded,
+            id,
+        } = this.state;        
+
+        const course = { 
+            title, 
+            description, 
+            estimatedTime, 
+            materialsNeeded,
+            id,
+            userId 
+        };
+
+        context.data.updateCourse(course, id, authUser.emailAddress, userPassword)
+            .then( errors => {
+
+                if (errors.length) {
+                    this.setState({ errors });
+                } else {
+                    this.props.history.push(`/courses/${this.props.match.params.id}`);
+                }
+            })
+            .catch( errors => { 
+                console.log(errors);
+                this.props.history.push('/error');
+            });  
     }
 
     change = (event) => {
@@ -43,25 +92,48 @@ class CourseDetails extends Component {
         });
     };
 
+    ErrorsDisplay = ( errors ) => {
+        let errorsDisplay = null;
+
+        if (errors.length) {
+          errorsDisplay = (
+            <div>
+              <h2 className="validation--errors--label">Validation errors</h2>
+              <div className="validation-errors">
+                <ul>
+                  {errors.map((error, i) => 
+                    <li key={i}>
+                        {error}
+                    </li>)}
+                </ul>
+              </div>
+            </div>
+          );
+        }
+      
+        return errorsDisplay;
+    }
+
     render() {
 
-        let course = this.state.course;
         let courseDeets = 
             <div>
+
+            {this.ErrorsDisplay(this.state.errors)}
+
                 <form>
                     <div className="grid-66">
                         <div className="course--header">
-                            <h4 className="course--label">Course</h4>
                             <div>
                                 <input id="title" 
                                     name="title" 
                                     type="text" 
                                     className="input-title course--title--input" 
                                     placeholder="Course title..." 
-                                    value={this.state.course.title}
+                                    value={this.state.title}
                                     onChange={this.change} />
                             </div>
-                            <p>By {course.teacher}</p>
+                            <p>By {this.state.ownerFirstName} {this.state.ownerLastName}</p>
                         </div>
                         <div className="course--description">
                             <div>
@@ -69,7 +141,7 @@ class CourseDetails extends Component {
                                     name="description" 
                                     className="" 
                                     placeholder="Course description..." 
-                                    value={this.state.course.description} 
+                                    value={this.state.description} 
                                     onChange={this.change}>
                                 </textarea>
                             </div>
@@ -87,7 +159,7 @@ class CourseDetails extends Component {
                                             type="text" 
                                             className="course--time--input" 
                                             placeholder="Hours" 
-                                            value={this.state.course.estimatedTime} 
+                                            value={this.state.estimatedTime} 
                                             onChange={this.change} />
                                     </div>
                                 </li>
@@ -99,7 +171,7 @@ class CourseDetails extends Component {
                                             name="materialsNeeded" 
                                             className="" 
                                             placeholder="List materials..." 
-                                            value={this.state.course.materialsNeeded} 
+                                            value={this.state.materialsNeeded} 
                                             onChange={this.change}>
                                         </textarea>
                                         </div>
@@ -124,4 +196,4 @@ class CourseDetails extends Component {
     }
 }
 
-export default CourseDetails;
+export default UpdateCourse;

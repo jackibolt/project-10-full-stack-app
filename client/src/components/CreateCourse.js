@@ -13,15 +13,17 @@ class CreateCourse extends Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
+
         const { context } = this.props;
         const authUser = context.authenticatedUser;
+        const userPassword = context.authenticatedUserPassword;
+        const userId = context.authenticatedUser.userId;
 
         const {
             title,
             description,
             estimatedTime,
             materialsNeeded,
-            userId
         } = this.state; 
 
         const course = { 
@@ -32,7 +34,7 @@ class CreateCourse extends Component {
             materialsNeeded 
         };
 
-        context.data.createCourse(course, authUser.emailAddress, authUser.password)
+        context.data.createCourse(course, authUser.emailAddress, userPassword)
             .then( errors => {
                 if (errors.length) {
                     this.setState({ errors });
@@ -41,12 +43,12 @@ class CreateCourse extends Component {
                     this.props.history.push('/');
                 }
             })
-            .catch( err => { 
-                console.log(err);
+            .catch( errors => { 
+                console.log(errors);
                 this.props.history.push('/error');
             });  
     }
-
+    
     cancelLink = (event) => {
         event.preventDefault(); 
         this.props.history.push('/');
@@ -63,14 +65,41 @@ class CreateCourse extends Component {
         });
     }
 
+    ErrorsDisplay = ( errors ) => {
+        let errorsDisplay = null;
+
+        if (errors.length) {
+          errorsDisplay = (
+            <div>
+              <h2 className="validation--errors--label">Validation errors</h2>
+              <div className="validation-errors">
+                <ul>
+                  {errors.map((error, i) => 
+                    <li key={i}>
+                        {error}
+                    </li>)}
+                </ul>
+              </div>
+            </div>
+          );
+        }
+      
+        return errorsDisplay;
+    }
+
+
+
     render() {
-// THIS SECTION NEEDS TO BE CONNECTED TO THE USER INFO - Line 46
+// THIS SECTION NEEDS TO BE CONNECTED TO THE USER INFO - Line 116
         return(
 
             <div className="bounds course--detail">
                 <div>
                     <h1>Create Course</h1>
                     <div>
+
+                    {this.ErrorsDisplay(this.state.errors)}
+
                         <form>
                             <div className="grid-66">
                                 <div className="course--header">

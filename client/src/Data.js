@@ -17,14 +17,14 @@ export default class Data {
     }
 
     if (requiresAuth) {    
-      const encodedCredentials = btoa(`${credentials.username}:${credentials.password}`);
+      const encodedCredentials = btoa(`${credentials.emailAddress}:${credentials.password}`);
       options.headers['Authorization'] = `Basic ${encodedCredentials}`;
     }
     return fetch(url, options);
   }
 
-  async getUser(username, password) {
-    const response = await this.api(`/users`, 'GET', null, true, { username, password });
+  async getUser(emailAddress, password) {
+    const response = await this.api(`/users`, 'GET', null, true, { emailAddress, password });
     if (response.status === 200) {
       return response.json().then(data => data);
     }
@@ -51,20 +51,49 @@ export default class Data {
     }
   }
 
-  async createCourse(courseInfo, email, password) {
-      const response = await this.api('/courses', 'POST', courseInfo, true, {email, password})
-      console.log(email, password)
+  async createCourse(courseInfo, emailAddress, password) {
+      const response = await this.api('/courses', 'POST', courseInfo, true, { emailAddress, password });
       if (response.status === 201) {
         return [];
       }
       else if (response.status === 400) {
         return response.json().then(data => {
-          return data.error.errors;
+          return data.errors;
         });
       }
       else {
         throw new Error();
       }
+  }
+
+  async updateCourse(courseInfo, id, emailAddress, password) {
+    const response = await this.api(`/courses/${id}`, 'PUT', courseInfo, true, { emailAddress, password });
+    if (response.status === 204) {
+      return [];
+    }
+    else if (response.status === 400) {
+      return response.json().then(data => {
+        return data.errors;
+      });
+    }
+    else {
+      throw new Error();
+    }
+  }
+
+  async deleteCourse(id, emailAddress, password) {
+    const response = await this.api(`/courses/${id}`, 'DELETE', null, true, { emailAddress, password });
+    if (response.status === 204) {
+      return [];
+    }
+    else if (response.status === 400) {
+      return response.json().then(data => {
+        return data.errors;
+      });
+    }
+    else {
+      throw new Error();
+    }
   }
 
 }
