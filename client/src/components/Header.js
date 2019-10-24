@@ -12,6 +12,7 @@ class Header extends Component {
 
         return(
 
+          // shows user sign in/out dependent on Provider state
           <div className="header">
             <div className="bounds">
               <h1 className="header--logo"><Link to='/'>Courses</Link></h1>

@@ -10,15 +10,16 @@ class UserSignIn extends Component {
         errors: [],
     }
 
+    // functionality for cancel button
     cancelLink = (event) => {
         event.preventDefault(); 
         this.props.history.push('/');
     }
 
+    // funcitonality for sign in button
     handleSignIn = (event) => {
         event.preventDefault();
         const { context } = this.props;
-        // const { from } = this.props.location.state;
         const {
             emailAddress,
             password,
@@ -40,6 +41,7 @@ class UserSignIn extends Component {
             });
     }
 
+    // updates state as user changes input
     change = (event) => {
         const name = event.target.name;
         const value = event.target.value;

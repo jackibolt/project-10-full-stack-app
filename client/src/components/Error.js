@@ -3,7 +3,7 @@ import React from 'react';
 const Error = () => {
 
     return(
-        <p>there's been an error.</p>
+        <p>There's been an error.</p>
     )
 }
 

@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-// THIS NEEDS UPDATES TO TEACHER + EDITING CAPABILITIES + UPDATING THE DATABASE
 class UpdateCourse extends Component {
 
     state = {
@@ -16,8 +15,7 @@ class UpdateCourse extends Component {
         onerLastName: '',
     };
 
-
-
+    // fetches the course data and updates the state
     componentDidMount() {
         axios.get(`http://localhost:5000/api/courses/${this.props.match.params.id}`)
             .then( response => {
@@ -36,11 +34,13 @@ class UpdateCourse extends Component {
             })
     };
 
+    // functionality for cancel button
     cancelLink = (event) => {
         event.preventDefault(); 
         this.props.history.push(`/courses/${this.props.match.params.id}`);
     }
 
+    // functionality for update button
     handleSubmit = (event) => {
         event.preventDefault();
 
@@ -81,6 +81,7 @@ class UpdateCourse extends Component {
             });  
     }
 
+    // resets state as user changes input
     change = (event) => {
         const name = event.target.name;
         const value = event.target.value;
@@ -92,6 +93,7 @@ class UpdateCourse extends Component {
         });
     };
 
+    // dipslays validation errors if they exist
     ErrorsDisplay = ( errors ) => {
         let errorsDisplay = null;
 
@@ -189,7 +191,9 @@ class UpdateCourse extends Component {
         return(
 
             <div className='bounds course--detail'>
+
                 { courseDeets }
+                
             </div>
 
         );

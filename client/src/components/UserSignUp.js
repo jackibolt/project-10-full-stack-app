@@ -13,12 +13,13 @@ export default class UserSignUp extends Component {
         errors: []
     }
 
-
+    // functionality for cancel button
     cancelLink = (event) => {
         event.preventDefault(); 
         this.props.history.push('/');
     }
 
+    // functionality for sign up button
     handleSignUp = (event) => {
         event.preventDefault();
         const { context } = this.props;
@@ -58,6 +59,7 @@ export default class UserSignUp extends Component {
 
     }
 
+    // updates state at user changes input
     change = (event) => {
         const name = event.target.name;
         const value = event.target.value;
@@ -69,6 +71,7 @@ export default class UserSignUp extends Component {
         });
     };
 
+    // dipslays validation errors if they exist
     ErrorsDisplay = ( errors ) => {
         let errorsDisplay = null;
 

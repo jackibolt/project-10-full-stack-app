@@ -19,6 +19,7 @@ class CourseDetails extends Component {
         onerLastName: '',
     };
 
+    // fetches course data and sets the state
     componentDidMount() {
         axios.get(`http://localhost:5000/api/courses/${this.props.match.params.id}`)
             .then( response => {
@@ -38,6 +39,7 @@ class CourseDetails extends Component {
             })
     };
 
+    // functionality for delete button
     handleDelete = (event) => {
         event.preventDefault();
 
@@ -63,6 +65,7 @@ class CourseDetails extends Component {
 
     }
 
+    // returns html for course update and delete buttons if the user owns the course
     isCourseOwner = () => {
         
         const { context } = this.props;
@@ -116,6 +119,7 @@ class CourseDetails extends Component {
                 </div>
 
                 { courseDeets }
+                
             </div>
 
 

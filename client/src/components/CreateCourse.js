@@ -11,6 +11,7 @@ class CreateCourse extends Component {
         errors: [],
     };
 
+    // functionality for create course button
     handleSubmit = (event) => {
         event.preventDefault();
 
@@ -24,6 +25,7 @@ class CreateCourse extends Component {
             description,
             estimatedTime,
             materialsNeeded,
+
         } = this.state; 
 
         const course = { 
@@ -49,11 +51,13 @@ class CreateCourse extends Component {
             });  
     }
     
+    // functionality for cancel button
     cancelLink = (event) => {
         event.preventDefault(); 
         this.props.history.push('/');
     }
 
+    // resets state as user changes input
     change = (event) => {
         const name = event.target.name;
         const value = event.target.value;
@@ -65,6 +69,7 @@ class CreateCourse extends Component {
         });
     }
 
+    // dipslays validation errors if they exist
     ErrorsDisplay = ( errors ) => {
         let errorsDisplay = null;
 
@@ -87,10 +92,12 @@ class CreateCourse extends Component {
         return errorsDisplay;
     }
 
-
-
     render() {
-// THIS SECTION NEEDS TO BE CONNECTED TO THE USER INFO - Line 116
+
+        const { context } = this.props;
+        const firstName = context.authenticatedUser.firstName;
+        const lastName = context.authenticatedUser.lastName;
+
         return(
 
             <div className="bounds course--detail">
@@ -103,7 +110,6 @@ class CreateCourse extends Component {
                         <form>
                             <div className="grid-66">
                                 <div className="course--header">
-                                    <h4 className="course--label">Course</h4>
                                     <div>
                                         <input 
                                             id="title" 
@@ -114,7 +120,7 @@ class CreateCourse extends Component {
                                             value={this.state.title} 
                                             onChange={this.change} />
                                         </div>
-                                    <p>By -------</p>
+                                    <p>By {firstName} {lastName}</p>
                                 </div>
                                 <div className="course--description">
                                     <div>
