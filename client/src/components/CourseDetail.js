@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 const ReactMarkdown = require('react-markdown')
 
 
-class CourseDetails extends Component {
+class CourseDetail extends Component {
 
     state = {
         title: '',
@@ -69,16 +69,18 @@ class CourseDetails extends Component {
     isCourseOwner = () => {
         
         const { context } = this.props;
-        const authUserId = context.authenticatedUser.userId;
 
-        if (authUserId === this.state.userId){
-            return(
-                <span>
-                    <Link className="button" to={`/courses/${this.props.match.params.id}/update`}>Update Course</Link>
-                    <Link className="button" to='/' onClick={this.handleDelete}>Delete Course</Link>
-                </span>
-            )
-        } 
+        if (context.authenticatedUser) {
+            const authUserId = context.authenticatedUser.userId;
+            if (authUserId === this.state.userId){
+                return(
+                    <span>
+                        <Link className="button" to={`/courses/${this.props.match.params.id}/update`}>Update Course</Link>
+                        <Link className="button" to='/' onClick={this.handleDelete}>Delete Course</Link>
+                    </span>
+                )
+            } 
+        }
     }
 
     render() {
@@ -91,7 +93,7 @@ class CourseDetails extends Component {
                         <p>By {this.state.ownerFirstName} {this.state.ownerLastName}</p>
                     </div>
                     <div className="course--description">
-                        {this.state.description}
+                        <ReactMarkdown source={this.state.description} />
                     </div>
                 </div>
                 <div className="grid-25 grid-right">
@@ -127,4 +129,4 @@ class CourseDetails extends Component {
     }
 }
 
-export default CourseDetails;
+export default CourseDetail;

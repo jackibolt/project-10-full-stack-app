@@ -1,10 +1,10 @@
 import React from 'react';
 
-const Error = () => {
+const UnhandledError = () => {
 
     return(
         <p>There's been an error.</p>
     )
 }
 
-export default Error;
+export default UnhandledError;
